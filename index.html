@@ -1975,18 +1975,19 @@
         // Currently selected investment product
         let selectedProduct = null;
         
-        // Investment products
+        // Investment products - UPDATED TO MATCH YOUR EXAMPLE
         const investmentProducts = [
             {
                 id: 'starter',
                 name: 'Starter Package',
-                amount: 5.00,
+                amount: 10.00, // Changed from 5 to 10
                 term: 30,
                 returnPercent: 50,
                 features: [
                     'Perfect for beginners',
                     'Low risk investment',
-                    'Daily earnings',
+                    'Daily earnings: $0.50 (₱25)',
+                    'Total return: $15 (₱750) in 30 days',
                     '24/7 support'
                 ]
             },
@@ -1998,7 +1999,8 @@
                 returnPercent: 50,
                 features: [
                     'Best value for money',
-                    'Popular choice',
+                    'Daily earnings: $1.25 (₱62.50)',
+                    'Total return: $37.50 (₱1,875)',
                     'Priority support',
                     'Bonus 1% on referrals'
                 ]
@@ -2011,6 +2013,8 @@
                 returnPercent: 50,
                 features: [
                     'High returns',
+                    'Daily earnings: $5.00 (₱250)',
+                    'Total return: $150 (₱7,500)',
                     'VIP support',
                     'Weekly reports',
                     'Bonus 2% on referrals'
@@ -2024,6 +2028,8 @@
                 returnPercent: 50,
                 features: [
                     'Maximum returns',
+                    'Daily earnings: $25.00 (₱1,250)',
+                    'Total return: $750 (₱37,500)',
                     'Dedicated account manager',
                     'Daily reports',
                     'Bonus 3% on referrals'
@@ -2037,6 +2043,8 @@
                 returnPercent: 50,
                 features: [
                     'Choose your own amount',
+                    'Daily earnings: 5% of investment',
+                    'Total return: 50% in 30 days',
                     'Flexible terms available',
                     'Personalized support',
                     'All features included'
@@ -2212,7 +2220,7 @@
             });
         });
         
-        // Load investment products
+        // Load investment products - UPDATED TO SHOW DAILY EARNINGS IN FEATURES
         function loadInvestmentProducts() {
             const container = document.getElementById('investmentProducts');
             if (!container) return;
@@ -2355,20 +2363,20 @@
                     },
                     {
                         id: Date.now() - 172800000,
-                        amount: -5.00,
+                        amount: -10.00, // Changed from -5 to -10 to match example
                         description: 'GCash Investment',
                         date: new Date(Date.now() - 172800000).toISOString(),
                         status: 'completed'
                     },
                     {
                         id: Date.now() - 86400000,
-                        amount: 0.25,
+                        amount: 0.50, // Changed from 0.25 to 0.50 to match example
                         description: 'Daily Earnings',
                         date: new Date(Date.now() - 86400000).toISOString(),
                         status: 'completed'
                     }
                 ],
-                totalInvested: 15.00,
+                totalInvested: 10.00, // Changed from 15 to 10 to match example
                 totalReturns: 7.50,
                 settings: {
                     twoFactorEnabled: false
@@ -2376,21 +2384,21 @@
                 lastEarningsDate: new Date().getTime()
             };
             
-            // Add a sample investment if none exists
+            // Add a sample investment if none exists - UPDATED TO MATCH YOUR EXAMPLE
             if (users[demoEmail].investments.length === 0) {
                 const startDate = new Date();
                 const endDate = new Date();
-                endDate.setDate(startDate.getDate() + 15); // 15 days remaining
+                endDate.setDate(startDate.getDate() + 30); // 30 days term
                 
                 users[demoEmail].investments.push({
                     id: Date.now(),
-                    amount: 10.00,
-                    startDate: startDate.getTime() - (15 * 86400000), // Started 15 days ago
+                    amount: 10.00, // $10 investment
+                    startDate: startDate.getTime(),
                     endDate: endDate.getTime(),
                     walletAddress: users[demoEmail].wallet,
                     status: 'active',
                     paymentMethod: 'USDT',
-                    dailyEarnings: 0.1667, // 1.67% daily (50% over 30 days)
+                    dailyEarnings: 0.50, // $0.50 daily (5% of $10)
                     productName: 'Starter Package'
                 });
             }
@@ -2402,14 +2410,14 @@
                 
                 users[demoEmail].history.push({
                     id: Date.now(),
-                    amount: 5.00,
+                    amount: 10.00, // Changed from 5 to 10 to match example
                     startDate: startDate.getTime(),
                     endDate: endDate.getTime(),
                     walletAddress: users[demoEmail].wallet,
                     status: 'completed',
                     paymentMethod: 'GCash',
-                    returnAmount: 7.50, // 50% return
-                    productName: 'Standard Package'
+                    returnAmount: 15.00, // 50% return (changed from 7.50 to 15)
+                    productName: 'Starter Package'
                 });
             }
             
@@ -2488,7 +2496,7 @@
             earningsInterval = setInterval(calculateDailyEarnings, DAILY_EARNINGS_INTERVAL);
         }
         
-        // Calculate daily earnings from active investments (1.67% daily for 50% in 30 days)
+        // Calculate daily earnings from active investments (5% daily for 50% in 30 days)
         function calculateDailyEarnings() {
             if (!currentUser) return;
             
@@ -2502,10 +2510,10 @@
             if (now - lastEarningsDate >= DAILY_EARNINGS_INTERVAL) {
                 let totalDailyEarnings = 0;
                 
-                // Calculate earnings for each active investment (1.67% daily for 50% in 30 days)
+                // Calculate earnings for each active investment (5% daily for 50% in 30 days)
                 user.investments.forEach(investment => {
                     if (investment.status === 'active') {
-                        const dailyEarning = investment.amount * 0.0167; // 1.67% daily
+                        const dailyEarning = investment.amount * 0.05; // 5% daily (changed from 1.67% to 5%)
                         totalDailyEarnings += dailyEarning;
                         
                         // Add transaction for this investment's earnings
@@ -2858,7 +2866,7 @@
                 investment.returnAmount || (investment.amount * 1.50).toFixed(2) : 
                 (investment.amount * 1.50).toFixed(2);
             
-            const dailyEarnings = investment.amount * 0.0167; // 1.67% daily (50% over 30 days)
+            const dailyEarnings = investment.amount * 0.05; // 5% daily (50% over 30 days)
             
             item.innerHTML = `
                 <p>Product: <span>${investment.productName || 'Custom Investment'}</span></p>
@@ -2866,7 +2874,7 @@
                 <p>Start Date: <span>${new Date(investment.startDate).toLocaleDateString()}</span></p>
                 <p>End Date: <span>${new Date(investment.endDate).toLocaleDateString()}</span></p>
                 <p>Payment Method: <span>${investment.paymentMethod || 'USDT'}</span></p>
-                ${!isHistory ? `<p>Daily Earnings: <span class="highlight">${dailyEarnings.toFixed(4)} USDT (${formatPhp(usdToPhp(dailyEarnings))})</span> (1.67%)</p>` : ''}
+                ${!isHistory ? `<p>Daily Earnings: <span class="highlight">${dailyEarnings.toFixed(4)} USDT (${formatPhp(usdToPhp(dailyEarnings))})</span> (5%)</p>` : ''}
                 ${status}
                 <p>${isHistory ? 'Returned' : 'Expected Return'}: <span class="highlight">${returnAmount} USDT (${formatPhp(usdToPhp(returnAmount))})</span></p>
             `;
@@ -3099,7 +3107,7 @@
                     walletAddress: useMethod === 'USDT' ? walletAddress : useMethod,
                     status: 'active',
                     paymentMethod: useMethod,
-                    dailyEarnings: amount * (selectedProduct.returnPercent / 100) / selectedProduct.term
+                    dailyEarnings: amount * 0.05 // 5% daily (changed from 1.67% to 5%)
                 };
                 
                 // Add to user's investments
