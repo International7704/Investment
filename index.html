@@ -1512,7 +1512,6 @@
                         <p>Amount: <span id="displayAmount" class="highlight">0.00</span> USDT (<span id="displayAmountPHP" class="highlight">₱0.00</span>)</p>
                         <p>Term: <span id="displayTerm" class="highlight">0 days</span></p>
                         <p>Return: <span id="displayReturn" class="highlight">0.00</span> USDT (<span id="displayReturnPHP" class="highlight">₱0.00</span>) - <span id="displayReturnPercent" class="highlight">0%</span></p>
-                        <p>Maturity Date: <span id="displayMaturity" class="highlight">Select a product</span></p>
                         <p>Daily Earnings: <span id="displayDailyEarnings" class="highlight">0.00</span> USDT (<span id="displayDailyEarningsPHP" class="highlight">₱0.00</span>)</p>
                     </div>
                 </div>
@@ -2292,7 +2291,7 @@
             document.getElementById('investBtnText').textContent = `Invest in ${product.name}`;
         }
         
-        // Update product display
+        // Update product display (removed maturity date)
         function updateProductDisplay(product) {
             let amount = product.amount;
             if (product.custom) {
@@ -2301,13 +2300,6 @@
             
             const returnAmount = amount * (product.returnPercent / 100);
             const dailyEarnings = returnAmount / product.term;
-            
-            // Calculate end date (term days from now)
-            const today = new Date();
-            const endDate = new Date(today);
-            endDate.setDate(today.getDate() + product.term);
-            
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
             
             // Update display
             document.getElementById('selectedProductDisplay').style.display = 'block';
@@ -2318,7 +2310,6 @@
             document.getElementById('displayReturn').textContent = returnAmount.toFixed(2);
             document.getElementById('displayReturnPHP').textContent = formatPhp(usdToPhp(returnAmount));
             document.getElementById('displayReturnPercent').textContent = `${product.returnPercent}%`;
-            document.getElementById('displayMaturity').textContent = endDate.toLocaleDateString('en-US', options);
             document.getElementById('displayDailyEarnings').textContent = dailyEarnings.toFixed(4);
             document.getElementById('displayDailyEarningsPHP').textContent = formatPhp(usdToPhp(dailyEarnings));
         }
